@@ -157,3 +157,116 @@ function merge(source, target) {
     return Object.assign(clonedSource, target);
 }
 console.log(merge(a, b));
+
+console.log("-----------4. Deep Equal----------------")
+
+
+/*  4. Deep Equal
+Apartado A
+Suponiendo objetos sin anidamiento y con propiedades primitivas, construye una función que compare el contenido de 2 objetos.
+TIP: Recuerda, los objetos tienen un método hasOwnProperty que nos indica si dicho objeto tiene o no una propiedad concreta. 
+Ejemplo a.hasOwnProperty("name"), si a tiene una propiedad name nos devolverá true, en caso contrario false.
+var user = { name: "María", age: 30 };
+var clonedUser = { name: "María", age: 30 };
+console.log(user === clonedUser); // false
+function isEqual(a, b) {
+ ... // Implementation here
+}
+console.log(isEqual(user, clonedUser)); // true
+
+Apartado B
+Vamos a mejorar la solución del apartado A suponiendo ahora que si puede existir anidamiento de objetos.
+TIP: Recuerda que el operador typeof en Javascript nos devuelve un string indicando el tipo de una variable
+ de entre tipos primitivos, objetos o funciones. Ejemplo, typeof 12 // "number" o typeof {} // "object".
+var user = {
+  name: "María",
+  age: 30,
+  address: { city: "Málaga", code: 29620 },
+  friends: ["Juan"],
+};
+var clonedUser = {
+  name: "María",
+  age: 30,
+  address: { city: "Málaga", code: 29620 },
+  friends: ["Juan"],
+};
+function isDeepEqual(a, b) {
+  ... // Implementation here
+
+console.log(isDeepEqual(user, clonedUser)); // true
+*/
+console.log("APARATADO A");
+// APARTADO A
+const user = { name: "María", age: 30 };
+const clonedUser = { name: "María", age: 30 };
+console.log(user === clonedUser);
+// const isEqual = (a, b) => a === b ? true : false;
+function isEqual(a, b) {
+    if (typeof a !== 'object' || typeof b !== 'object') {
+        return false;
+    }
+    if (Object.keys(a).length !== Object.keys(b).length) {
+        return false;
+    }
+    for (var prop in a) {
+        if (a.hasOwnProperty(prop)) {
+            if (!b.hasOwnProperty(prop)) {
+                return false;
+        }
+            if (a[prop] !== b[prop]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+console.log(isEqual(user, clonedUser));
+
+console.log("APARATADO B");
+// APARTADO B
+
+const userB = {
+    name: "María",
+    age: 30,
+    address: { city: "Málaga", code: 29620 },
+    friends: ["Juan"],
+  };
+  
+  const clonedUserB = {
+    name: "María",
+    age: 30,
+    address: { city: "Málaga", code: 29620 },
+    friends: ["Juan"],
+  };
+
+console.log(userB === clonedUserB);
+
+function isDeepEqual(a, b) {
+    if (typeof a !== 'object' || typeof b !== 'object') {
+        return false;
+    }
+    if (Object.keys(a).length !== Object.keys(b).length) {
+        return false;
+    }
+    for (var prop in a) {
+        if (a.hasOwnProperty(prop)) {
+            if (!b.hasOwnProperty(prop)) {
+                return false;
+            }
+            var valueA = a[prop];
+            var valueB = b[prop];
+            if (typeof valueA === 'object' && typeof valueB === 'object') {
+                if (!isDeepEqual(valueA, valueB)) {
+                    return false;
+                }
+            } else { 
+                if (valueA !== valueB) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+console.log(isDeepEqual(userB, clonedUserB));
+  
