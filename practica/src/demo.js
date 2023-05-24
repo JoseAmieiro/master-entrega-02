@@ -158,10 +158,10 @@ function merge(source, target) {
 }
 console.log(merge(a, b));
 
-console.log("-----------4. Deep Equal----------------")
+console.log("-----------5. Deep Equal----------------")
 
 
-/*  4. Deep Equal
+/*  5. Deep Equal
 Apartado A
 Suponiendo objetos sin anidamiento y con propiedades primitivas, construye una función que compare el contenido de 2 objetos.
 TIP: Recuerda, los objetos tienen un método hasOwnProperty que nos indica si dicho objeto tiene o no una propiedad concreta. 
@@ -269,4 +269,243 @@ function isDeepEqual(a, b) {
     return true;
 }
 console.log(isDeepEqual(userB, clonedUserB));
-  
+
+
+console.log("-----------6. Dices----------------")
+
+/* 6. Dices
+Empleando el concepto de closure, emula el comportamiento de 2 dados.
+
+Utiliza un closure para almacenar el resultado de tirar 2 dados, y encapsula 
+junto a estos datos, métodos que implementen la siguiente funcionalidad:
+
+Hacer reset, poner a undefined o null ambos resultados.
+Tirar los dados. TIP: Usa Math.random() para tiradas aleatorias.
+Imprimir el resultado por consola. Ten en cuenta lo siguiente:
+Informa al usuario que debe tirar primero cuando corresponda.
+Si saca doble 6, ¡dale un premio!
+*/
+
+const rollDice = () => {
+    let dice1, dice2;
+    const throwDice = () => {
+        dice1 = Math.floor(Math.random() * 6) + 1;
+        dice2 = Math.floor(Math.random() * 6) + 1;
+        printResult();
+    } 
+    const printResult = () => {
+        if (dice1 === undefined || dice2 === undefined) {
+          console.log("Debe tirar los dado primero.");
+        } else {
+          console.log(`Resultado: dado 1 ${dice1}, dado 2 ${dice2}`);
+          if (dice1 === 6 && dice2 === 6) {
+            console.log("¡Felicidades! Has sacado un doble 6.  ¡¡Ganas un premio!!")
+          }
+        }
+    }
+    const reset = () => {
+      dice1 = undefined;
+      dice2 = undefined;
+      console.log(`Resultados reseteados`);
+    }
+    return {
+      throwDice,
+      reset,
+    };
+}
+
+const playDice = rollDice();
+playDice.throwDice();
+playDice.reset();
+playDice.throwDice();
+
+
+console.log("-----------8. Includes----------------")
+
+/*Includes
+
+En ES7 ya existe una función de manejo de arrays llamada Array.includes() que indica si un determinado 
+valor figura entre los items de un array dado. Crea una función en ES5 con el mismo comportamiento, 
+es decir, una función que reciba un array y un valor y devuelva un boolean indicando si el valor está dentro del array.
+
+function includes(array, value) {
+  // Implementation here
+}
+
+// Ejemplo:
+console.log(includes([1, 2, 3], 3)); // true
+console.log(includes([1, 2, 3], 0)); // false
+Challenge
+El ejercicio anterior puede quedar simplificado si utilizas una función de los arrays que devuelve el índice de un elemento dado.
+
+TIP: Consulta la documentación en MDN sobre los arrays:
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype
+*/
+
+
+function includes(array, value) {
+  for (const element of array) {
+    if (element === value) {
+      return true;
+    }
+  }
+  return false;
+}
+
+console.log(includes([1, 2, 3], 3)); // true
+console.log(includes([1, 2, 3], 0)); // false
+
+const includesChallenge = (array, value) => (array.indexOf(value) >=  0) ? true : false;
+console.log(includesChallenge([1, 2, 3, 5], 7));
+console.log(includesChallenge([1, 2, 3], 1));
+
+console.log("-----------9. Includes----------------")
+
+/*
+Primes
+Crea una función tal que, dado un número entero de inicio from y otro de fin to, 
+encuentre los números primos entre ellos y los muestre por pantalla.
+
+function showPrimes(from, to) {
+  // Implementation here.
+}
+Asi pues, la salida desde el 1 al 10 sería:
+
+1 is not a prime
+2 is PRIME!
+3 is PRIME!
+4 is not a prime
+5 is PRIME!
+8 is not a prime
+9 is not a prime
+10 is not a prime
+Utiliza la función para explorar todos los primos hasta el 100.
+
+TIP: Puedes crearte una función auxiliar para saber si un número es primo o no, y utilizarla
+ en tu función principal. Es buena práctica crear funciones auxiliares que hagan una sola cosa
+  (principio de única responsabilidad).
+
+Challenge
+Se puede mejorar mucho el rendimiento del ejercicio anterior. Al buscar si un numero es primo, 
+podemos dejar de comprobar si es divisible por cada entero mayor que 1 una vez alcancemos la raiz cuadrada de dicho número.
+
+TIP: Explora en la documentación todas las funciones matemáticas que nos ofrece JavaScript 
+mediante el interfaz Math: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math
+*/
+
+function showPrimes(from, to) {
+  for (let number = from; number <= to; number++) {
+      if (isPrime(number)) {
+        console.log(`${number} -> Es número primo!` )
+      } else {
+        console.log(`${number} -> NO es número primo!` )
+      }
+  }
+}
+function isPrime(number) {
+    if (number <= 1) {
+      return false;
+    }
+
+    for (var i = 2; i <= Math.sqrt(number); i++) {
+      if (number % i === 0) {
+        return false;
+      }
+    }
+  return true;
+}
+
+showPrimes(1, 10);
+
+console.log("-----------10. Read Book----------------")
+
+
+/*Read Book
+Crea una función isBookRead que reciba una lista de libros y un título y devuelva si 
+se ha leído o no el libro. Un libro es un objeto con title como string y isRead como 
+booleano. En caso de no existir el libro devolver false
+
+TIP: Existe un método de los Arrays que te ayudará a buscar según un patrón: 
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/prototype
+
+function isBookRead(books, titleToSearch) {
+  // Implementation here
+}
+// Ejemplo:
+var books = [
+  { title: "Harry Potter y la piedra filosofal", isRead: true },
+  { title: "Canción de hielo y fuego", isRead: false },
+  { title: "Devastación", isRead: true },
+];
+console.log(isBookRead(books, "Devastación")); // true
+console.log(isBookRead(books, "Canción de hielo y fuego")); // false
+console.log(isBookRead(books, "Los Pilares de la Tierra")); // false
+*/
+const books = [
+  { title: "Harry Potter y la piedra filosofal", isRead: true },
+  { title: "Canción de hielo y fuego", isRead: false },
+  { title: "Devastación", isRead: true },
+];
+
+const isBookRead = (books, titleToSearch) => {
+    const foundBook = books.find(book => (book.title === titleToSearch))
+    if (foundBook) {
+        return titleToSearch + " is " + foundBook.isRead;
+    } else {
+      return  "Libro no encontrado " + false;
+    }
+}
+
+console.log(isBookRead(books, "Devastación")); // true
+console.log(isBookRead(books, "Canción de hielo y fuego")); // false
+console.log(isBookRead(books, "Los Pilares de la Tierra")); // false
+
+console.log("-----------11. Reverse Text----------------")
+
+
+/* Reverse Text
+Dado un texto cualquiera, invierte el orden de las palabras.
+
+TIP: Se hace en 1 sola línea.
+
+Ejemplo: "Uno dos tres" --> "tres dos Uno"
+TIP: Consulta la documentación en MDN sobre los strings, verás que incorporan muchas funciones de utilidad para el manejo y manipulación de strings.
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/prototype
+
+function reverseText(text) {
+  // Implementation here.
+}
+*/
+
+const reverseText = text => text.split(" ").reverse().join(" ");
+
+console.log(reverseText("Uno dos tres"));
+
+
+console.log("-----------12. Subsets----------------")
+
+/* Subsets
+Escribe una función que acepte un string como argumento y devuelva todas las partes finales de dicha palabra:
+
+function subsets(word) {
+  // Implementation here
+}
+
+// Ejemplo
+console.log(subsets("message")); // ["essage", "ssage", "sage", "age", "ge", "e"]
+Challenge
+Repite el ejercicio anterior sin utilizar arrays auxiliares ni bucles for/do/while.
+*/
+
+function subsets(word) {
+    const result = [];
+    for (let index = 1; index < word.length; index++) {
+        result.push(word.slice(index));
+    }
+    return result;
+}
+
+console.log(subsets("murcielago"));
+
