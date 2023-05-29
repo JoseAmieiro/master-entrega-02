@@ -501,11 +501,14 @@ Repite el ejercicio anterior sin utilizar arrays auxiliares ni bucles for/do/whi
 
 function subsets(word) {
     const result = [];
-    for (let index = 1; index < word.length; index++) {
-        result.push(word.slice(index));
+    for (let i = 1; i < word.length; i++) {
+        result.push(word.slice(i));
     }
     return result;
 }
 
+const subsetsPremium = (word) =>  word.length <= 1 ? [] : [word.slice(1), ...subsets(word.slice(1))];
+
 console.log(subsets("murcielago"));
+console.log(subsetsPremium("murcielago"));
 
