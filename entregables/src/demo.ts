@@ -21,7 +21,7 @@ const last = ( array ) => {}; // Implementation here.
 
 console.log("-----------1. Array operations/HEAD----------------")
 
-const head = (array) => {
+const head = (array: number[]): number | undefined => {
     const [first] = array;
     return first;
 };
@@ -29,7 +29,7 @@ console.log(head([1,2,3]));
 
 console.log("-----------1. Array operations/TAIL----------------")
 
-const tail = (array) => {
+const tail = (array: number[]): number[] => {
     const[,...rest] = array;
     return rest
 }
@@ -37,12 +37,12 @@ console.log(tail([1,2,3]));
 
 console.log("-----------1. Array operations/INIT----------------")
 
-const init = (array) => array.slice(0, array.length -1);
+const init = (array: number[]): number[] => array.slice(0, array.length -1);
 console.log(init([1, 2, 3, 4]));
 
 console.log("-----------1. Array operations/LAST----------------")
 
-const last = ( array ) => array[array.length -1];
+const last = ( array: number[]): number => array[array.length -1];
 console.log(last([1, 2, 3, 4]));
 
 console.log("-----------2. Concat----------------")
@@ -57,13 +57,13 @@ Opcional: Implementa una versión del ejercicio anterior donde se acepten
 múltiples arrays de entrada (más de 2).
 */
 
-const concat = (a, b) => [...a, ...b];
+const concat = (a: number[], b: number[]): number[] => [...a, ...b];
 console.log(concat([1, 2, 3, 4], [5, 6, 7]));
 
 console.log("-----------2. Concat/OPCIONAL----------------")
 
 
-const concatOptional = (...arrays) => arrays.reduce((result, array) => [...result, ...array], []);
+const concatOptional = <T>(...arrays): T[] => arrays.reduce((result, array) => [...result, ...array], []);
 console.log(concatOptional([1, 2, 3, 4], [5, 6, 7], [8], [9, 10]));
 
 
@@ -96,19 +96,26 @@ function merge(source, target) {
   // Implementation here.
 }
 */
-const a = { name: "Maria", surname: "Ibañez", country: "SPA" };
-const b = { name: "Luisa", age: 31, married: true };
+interface Person {
+    name: string;
+    surname?: string;
+    country?: string;
+    age?: number;
+    married?: boolean;
+}
+const a: Person = { name: "Maria", surname: "Ibañez", country: "SPA" };
+const b: Person = { name: "Luisa", age: 31, married: true };
 
 console.log("-----------Clone----------------")
 
-function clone (source) { 
+function clone (source: Person): Person { 
     return {...source}; 
 };
 console.log(clone(a));
 
 console.log("-----------Merge----------------")
 
-function merge (source, target) { 
+function merge (source: Person, target: Person): Person { 
     const merged = {...target};
     for(let prop in source) {
         if (source.hasOwnProperty(prop)) {
@@ -145,14 +152,19 @@ Opcional
 Utiliza Typescript para añadir los tipos adecuados.
 
 */
+interface Book {
+    title: string;
+    isRead: boolean;
+    
+}
 
-const books = [
+const books: Book[] = [
     { title: "Harry Potter y la piedra filosofal", isRead: true },
     { title: "Canción de hielo y fuego", isRead: false },
     { title: "Devastación", isRead: true },
   ];
   
-const isBookRead = (books, titleToSearch) => {
+const isBookRead = (books: Book[], titleToSearch: string): string => {  // he puesto como salida string por como he redactado la funcion, pero seria boolean si no pongo de donde viene el boolean
     const foundBook = books.find(book => (book.title === titleToSearch))
     if (foundBook) {
         return titleToSearch + " is " + foundBook.isRead;
@@ -197,14 +209,14 @@ machine1.play(); // "Congratulations!!!. You won 2 coins!!"
 
 
 class SlotMachine {
+    private coins: number;
 
     constructor () {
         this.coins = 0;
     }
-
-    play() {
+    play(): void {
         this.coins++;
-        const results = [];
+        const results: boolean[] = [];
         for (let i = 0; i < 3; i++) {
             results.push(Math.random() >= 0.5);
         }
@@ -216,8 +228,6 @@ class SlotMachine {
         }
     }
 }
-
-
 const machine1 = new SlotMachine();
 machine1.play();
 machine1.play();

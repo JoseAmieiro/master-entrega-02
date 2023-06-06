@@ -507,8 +507,195 @@ function subsets(word) {
     return result;
 }
 
-const subsetsPremium = (word) =>  word.length <= 1 ? [] : [word.slice(1), ...subsets(word.slice(1))];
+const subsetsPremium = (word) =>  
+    word.length <= 1 ? [] : [word.slice(1), ...subsets(word.slice(1))];
 
 console.log(subsets("murcielago"));
 console.log(subsetsPremium("murcielago"));
+
+
+console.log("-----------12. This----------------")
+
+
+/*This
+¿Cual es la salida de los logs en el siguiente código? Intenta razonar, 
+no te limites a ejecutar la solución.
+*/
+
+var surname = "Pérez";
+var person = {
+  name: "Juan",
+  surname: "González",
+  wife: {
+    name: "Ana",
+    surname: "Jiménez",
+    getSurname: function() {
+      return this.surname;
+    },
+  },
+};
+
+console.log(person.wife.getSurname()); // Jimenez surname esta en el ámbito wife
+var surnameFunction = person.wife.getSurname;
+console.log(surnameFunction()); // Perez surname esta en el ámbito golbal, objeto window
+console.log(surnameFunction.call(person)); // Gonzalez surname esta en el ámbito person
+
+
+console.log("-----------13. Values----------------")
+
+/*Values
+Escribe una función que devuelva una lista de valores de todas las propiedades de un objeto:
+
+function values(obj) {
+  // Implementation here
+}
+
+// Ejemplo:
+console.log(values({ id: 31, duration: 310, name: "long video", format: "mp4" }));
+ // [31, 310, "long video", "mp4"]
+Challenge
+Evita añadir las propiedades heredadas en caso de ser instancia de una clase:
+
+// Ejemplo:
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.walk = function() {
+  console.log("I'm walking");
+};
+
+var john = new Person("John");
+console.log(values(john)); // ["John"]; en vez de: 
+["John"; function() { console.log("I'm walking"); }]
+
+*/
+
+function values(obj) {
+  var result = [];
+  for (var elem in obj) {
+    if (obj.hasOwnProperty(elem)) {
+      result.push(obj[elem]);
+    }
+}
+  return result;
+}
+console.log(values({ id: 31, duration: 310, name: "long video", format: "mp4" }));
+
+function Person(name) {
+  this.name = name;
+}
+
+Person.prototype.walk = function() {
+  console.log("I'm walking");
+};
+
+var john = new Person("John");
+console.log(values(john));
+
+
+console.log("-----------14. Zip----------------")
+
+/*Zip
+Crea una función zipObject tal que acepte un array de claves como primer argumento y un 
+array de valores como segundo argumento y cuyo objetivo sea crear un objeto uniendo las 
+claves con sus valores. Asumir que el array de claves tiene como mínimo la misma longitud 
+que el de valores:
+
+function zipObject(keys, values) {
+  // Implementation here
+}
+
+// Ejemplo
+console.log(zipObject(["spanish", "english", "french"], ["hola", "hi", "salut"])); 
+// {spanish: "hola", english: "hi", french: "salut"}
+
+Challenge
+Si no hay valores suficientes para todas las claves evita que aparezcan como undefined.
+
+// Ejemplo:
+console.log(zipObject(["spanish", "english", "french"], ["hola"])); // {spanish: "hola"}
+
+*/
+
+
+
+
+console.log("-----------15. ZZCrypt----------------")
+
+/* ZZCrypt
+// Descifra el siguiente secreto:
+var secret =
+  "': rg!qg yq,urae: ghsrf wuran shrerg jq,u'qf ra r' 
+  ,qaq' er g'q,o rg,fuwurae: m!hfua( t'usqfuq ,:apu(:m xv";
+
+// Sabiendo que el alfabeto original ha sufrido la siguiente transformación:
+var plain = "abcdefghijklmnopqrstuvwxyz:()!¡,'";
+var cipher = "qw,ert(yuio'pa:sdfg!hjklz¡xcv)bnm";
+
+function decrypt(secret) {
+  // Implementation here.
+}
+
+*/
+
+function decrypt(secret) {
+  var plain = "abcdefghijklmnopqrstuvwxyz:()!¡,'";
+  var cipher = "qw,ert(yuio'pa:sdfg!hjklz¡xcv)bnm";
+  var result = "";
+  for (var i = 0; i < secret.length; i++) {
+    var index = cipher.indexOf(secret[i]);
+    if (index !== -1) {
+      result += plain[index];
+    } else {
+      result += secret[i];
+    }
+  }
+  return result;
+}
+
+var secret = "': rg!qg yq,urae: ghsrf wuran shrerg jq,u'qf ra r' ,qaq' er g'q,o rg,fuwurae: m!hfua( t'usqfuq ,:apu(:m xv";
+
+console.log(decrypt(secret))
+
+
+console.log("-----------201. Args----------------")
+
+/*Args
+Dada la siguiente función:
+
+function f(a, { b } = {}, c = 100) {
+  console.log(arguments.length);
+  console.log(a, a === arguments[0]);
+  console.log(b, b === arguments[1]);
+  console.log(c, c === arguments[2]);
+}
+Apartado A
+¿Qué muestra por consola esta llamada?
+
+f("JS rocks!", { b: "b" });
+Apartado B
+¿Y con estos argumentos?
+
+f({ b: "b" });
+Apartado C
+¿Y ahora?
+
+f("JS sucks!", null, 13);
+*/
+
+function func(a, { b } = {}, c = 100) {
+  console.log(arguments.length);
+  console.log(a, a === arguments[0]);
+  console.log(b, b === arguments[1]);
+  console.log(c, c === arguments[2]);
+}
+console.log("Apartado A");
+func("JS rocks!", { b: "b" });
+console.log("Apartado B");
+func({ b: "b" });
+console.log("Apartado C");
+func("JS sucks!", null, 13);
+
+
 
